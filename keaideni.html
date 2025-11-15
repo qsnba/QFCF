@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>送给你的可爱小网页</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Microsoft Yahei", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #ffe8f3 0, #ffd8ec 40%, #ffcbe8 70%, #ffb3de 100%);
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* 背景可爱漂浮元素 */
+    .bg-decor {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .bg-heart, .bg-star {
+      position: absolute;
+      font-size: 16px;
+      opacity: 0.5;
+      animation: floatUp 12s linear infinite;
+    }
+    .bg-heart:nth-child(1) { left: 10%; bottom: -10%; animation-duration: 12s; font-size: 18px; }
+    .bg-heart:nth-child(2) { left: 35%; bottom: -15%; animation-duration: 16s; font-size: 14px; }
+    .bg-heart:nth-child(3) { left: 60%; bottom: -20%; animation-duration: 14s; font-size: 20px; }
+    .bg-heart:nth-child(4) { left: 80%; bottom: -18%; animation-duration: 18s; font-size: 16px; }
+    .bg-star:nth-child(5)  { left: 20%; bottom: -12%; animation-duration: 19s; font-size: 14px; }
+    .bg-star:nth-child(6)  { left: 50%; bottom: -22%; animation-duration: 17s; font-size: 18px; }
+    .bg-star:nth-child(7)  { left: 75%; bottom: -25%; animation-duration: 21s; font-size: 13px; }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(0) translateX(0); opacity: 0; }
+      10%  { opacity: 0.6; }
+      50%  { transform: translateY(-50vh) translateX(10px); opacity: 0.9; }
+      100% { transform: translateY(-100vh) translateX(-15px); opacity: 0; }
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 22px;
+      border-radius: 26px;
+      box-shadow: 0 16px 40px rgba(255, 120, 170, 0.35);
+      border: 2px solid #ffb8d8;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cute-star {
+      width: 56px;
+      position: absolute;
+      top: -18px;
+      right: 6px;
+      animation: float 3s infinite ease-in-out;
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    h1 {
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 10px;
+      color: #ff6fa8;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: #ff95bd;
+      margin-bottom: 20px;
+    }
+
+    .main-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.3fr);
+      gap: 18px;
+    }
+    @media (max-width: 780px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .section {
+      background: #fff4fa;
+      border-left: 6px solid #ffaad3;
+      padding: 16px;
+      border-radius: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 12px rgba(255, 160, 200, 0.25);
+      position: relative;
+    }
+    .section:before {
+      content: "❤";
+      font-size: 20px;
+      position: absolute;
+      left: -20px;
+      top: 10px;
+      color: #ff6fa8;
+      animation: heartbeat 1.6s infinite;
+    }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.25); }
+    }
+
+    .text {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #444;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .pill {
+      padding: 6px 14px;
+      background: #ffdbec;
+      color: #c93f72;
+      border-radius: 999px;
+      font-size: 13px;
+      border: 1px solid #ffb1d4;
+      box-shadow: 0 2px 6px rgba(255, 150, 180, 0.2);
+    }
+
+    .fortune-box {
+      text-align: center;
+      padding: 18px 14px 20px;
+    }
+    .btn {
+      background: linear-gradient(120deg, #ff9ecd, #ff77b4);
+      border: none;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255, 120, 170, 0.4);
+      transition: 0.15s ease;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 20px rgba(255, 120, 170, 0.55);
+    }
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 12px rgba(255, 120, 170, 0.4);
+    }
+    .fortune {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #ff5f9c;
+      font-weight: bold;
+      min-height: 24px;
+      transition: opacity 0.15s ease;
+    }
+
+    /* 动漫女孩侧边卡片 */
+    .side-card {
+      background: linear-gradient(150deg, #ffe6f5, #ffeaf8);
+      border-radius: 18px;
+      border: 1px solid #ffc1e3;
+      padding: 14px 14px 16px;
+      box-shadow: 0 6px 18px rgba(255, 150, 190, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+    .side-title {
+      font-size: 14px;
+      color: #ff6fa8;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .side-text {
+      font-size: 13px;
+      color: #a44c73;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+    .avatar-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 6px;
+    }
+    .avatar {
+      width: 76px;
+      height: 76px;
+      border-radius: 999px;
+      border: 2px solid #ffbeda;
+      overflow: hidden;
+      box-shadow: 0 6px 12px rgba(255, 150, 190, 0.45);
+      background: #fff;
+    }
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .side-badge {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      font-size: 11px;
+      background: rgba(255, 127, 171, 0.9);
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 999px;
+      box-shadow: 0 3px 8px rgba(255, 120, 170, 0.5);
+    }
+
+    .kawaii-img {
+      width: 120px;
+      display: block;
+      margin: 12px auto 0;
+      animation: swing 2.5s infinite ease-in-out;
+    }
+    @keyframes swing {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(4deg); }
+    }
+
+    .footer {
+      margin-top: 22px;
+      text-align: right;
+      font-size: 12px;
+      color: #ff8cb8;
+    }
+  </style>
+</head>
+<body>
+  <!-- 背景装饰 -->
+  <div class="bg-decor">
+    <div class="bg-heart">❤</div>
+    <div class="bg-heart">♡</div>
+    <div class="bg-heart">❤</div>
+    <div class="bg-heart">❥</div>
+    <div class="bg-star">✧</div>
+    <div class="bg-star">★</div>
+    <div class="bg-star">✦</div>
+  </div>
+
+  <div class="container">
+    <!-- 右上角小星星，可替换为你自己的 png -->
+    <!-- 你可以用自己的可爱小图替换这个链接，或改成本地文件 -->
+    <img src="https://i.imgur.com/BXw7k7S.png" class="cute-star" alt="star" />
+
+    <h1>送给你的可爱小页面</h1>
+    <div class="subtitle">
+      希望这个小小网页，能让你今天的心情变得更软一点 (｡•ᴗ•｡)♡
+    </div>
+
+    <div class="main-layout">
+      <!-- 左侧主内容 -->
+      <div>
+        <div class="section">
+          <div class="text">
+            你是一个特别特别可爱的女孩子。<br>
+            不是那种很刻意、很做作的可爱，<br>
+            而是那种真实、自然、相处起来很舒服的感觉。<br><br>
+            有自己的小情绪，也有自己的小倔强，<br>
+            但这都是你很可爱的组成部分。
+          </div>
+          <div class="pill-list">
+            <div class="pill">可爱系人格</div>
+            <div class="pill">温柔属性</div>
+            <div class="pill">偶尔犯迷糊</div>
+            <div class="pill">但超级好相处</div>
+            <div class="pill">让人想多对你好一点</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="text">
+            你可能不会总是意识到：<br>
+            你身上真的有很多值得被喜欢的地方。<br><br>
+            希望你以后的每一天：<br>
+            可以稍微对自己温柔一点，不要总是那么苛刻。<br>
+            也希望，会有越来越多让你笑出来的瞬间。<br>
+          </div>
+          <!-- 这里的小图也可以换成你喜欢的动漫风插画 -->
+          <img src="https://i.imgur.com/5y9YpCA.png" class="kawaii-img" alt="cute" />
+        </div>
+
+        <div class="section fortune-box">
+          <div class="text">点一下抽你的今日可爱签 ✧( •̀ ω •́ )✧</div>
+          <button class="btn" onclick="drawFortune()">点击抽签</button>
+          <div id="fortuneText" class="fortune"></div>
+        </div>
+      </div>
+
+      <!-- 右侧动漫女孩卡片 -->
+      <div class="side-card">
+        <div class="side-badge">soft girl zone</div>
+        <div class="side-title">如果把你画成动漫女孩——</div>
+        <div class="side-text">
+          应该是那种：发梢软软、眼睛亮亮，<br>
+          看起来有点酷，又有点小可爱的人物设定。<br><br>
+          外表是「还挺淡定」的女孩子，<br>
+          内心其实超级细腻、也会很认真对待身边的人。
+        </div>
+        <div class="avatar-row">
+          <!-- 把 girl1.png / girl2.png 换成你自己的动漫女孩图片路径 -->
+          <div class="avatar">
+            <img src="ogzpAAffP4AregghGgu4TJAitfJA0cQJ2AYxD3~tplv-dy-aweme-images_q75.webp" alt="anime girl 1" />
+          </div>
+          <div class="avatar">
+            <img src="true.jpg" alt="anime girl 2" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      写这个网页的人：一个觉得你很可爱的朋友 · :)
+    </div>
+  </div>
+
+  <script>
+    const fortunes = [
+      "今天的你，适合被夸奖三次以上♡",
+      "如果觉得有点累，那就先好好喘口气，再继续出发吧。",
+      "没人跟你说的话——你已经比自己想象中要厉害很多了。",
+      "希望今天，也会有一件小事，刚刚好让你觉得：啊，还是挺值得的。",
+      "世界不会一直完美，但你可以慢慢学会更温柔地对待自己。",
+      "请你偶尔也相信一下：你就是别人眼里那个很值得被珍惜的人。"
+    ];
+
+    function drawFortune() {
+      const t = fortunes[Math.floor(Math.random() * fortunes.length)];
+      const el = document.getElementById("fortuneText");
+      el.style.opacity = 0;
+      setTimeout(() => {
+        el.textContent = t;
+        el.style.opacity = 1;
+      }, 140);
+    }
+  </script>
+</body>
+</html>
+
